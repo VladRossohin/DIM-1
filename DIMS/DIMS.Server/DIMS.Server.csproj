@@ -196,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ControllersApi\MemberController.cs" />
     <Compile Include="ControllersApi\ProfilesController.cs" />
+    <Compile Include="ControllersApi\TasksController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
@@ -211,7 +212,7 @@
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
-    <Compile Include="Models\Tasks\vTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskViewModel.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\UserProfileViewModel.cs" />

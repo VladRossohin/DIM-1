@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HIMS.Server.Models.Tasks
 {
-    public class vTaskViewModel
+    public class TaskViewModel
     {
         public int TaskId { get; set; }
         public string Name { get; set; }

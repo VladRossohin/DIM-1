@@ -8,7 +8,7 @@ namespace HIMS.Server.Models.Tasks
 {
     public class TasksListViewModel
     {
-        public IEnumerable<vTaskViewModel> Tasks { get; set; }
+        public IEnumerable<TaskViewModel> Tasks { get; set; }
         public IEnumerable<vUserProfileViewModel> UserProfiles { get; set; }
     }
 }
