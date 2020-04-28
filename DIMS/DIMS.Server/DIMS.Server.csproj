@@ -213,6 +213,8 @@
     <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskViewModel.cs" />
+    <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\vUserTaskViewModel.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\UserProfileViewModel.cs" />

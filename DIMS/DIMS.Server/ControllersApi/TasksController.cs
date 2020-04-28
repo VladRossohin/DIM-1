@@ -22,12 +22,42 @@ namespace HIMS.Server.ControllersApi
         private readonly ITaskService _taskService;
         private readonly IvTaskService _vTaskService;
         private readonly IUserTaskService _userTaskService;
+        private readonly IvUserTaskService _vUserTaskService;
 
-        public TasksController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService)
+        public TasksController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, IvUserTaskService vUserTaskService)
         {
             _taskService = taskService ?? throw new ArgumentNullException(nameof(taskService));
             _vTaskService = vTaskService ?? throw new ArgumentNullException(nameof(vTaskService));
             _userTaskService = userTaskService ?? throw new ArgumentNullException(nameof(userTaskService));
+            _vUserTaskService = vUserTaskService ?? throw new ArgumentNullException(nameof(vUserTaskService));
+        }
+
+        [HttpGet]
+        [Route("user/tasks/{id}")]
+        public IHttpActionResult GetVUserTasks([FromUri]int? id)
+        {
+            if (id.HasValue)
+            {
+                var vUserTaskDtos = _vUserTaskService.GetByUserId(id.Value);
+
+                var vUserTasks = Mapper.Map<IEnumerable<vUserTaskDTO>, IEnumerable<vUserTaskViewModel>>(vUserTaskDtos);
+
+                return Json(vUserTasks);
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please set user id!"));
+        }
+
+
+        [HttpGet]
+        [Route("tasks")]
+        public IHttpActionResult GetTasks()
+        {
+            var taskDtos = _vTaskService.GetAll();
+
+            var tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<TaskViewModel>>(taskDtos);
+
+            return Json(tasks);
         }
 
         [HttpPost]
@@ -36,44 +66,52 @@ namespace HIMS.Server.ControllersApi
         {
             if (ModelState.IsValid)
             {
-                var taskDto = Mapper.Map<TaskViewModel, TaskDTO>(task);
+                var taskDto = new TaskDTO
+                {
+                    Name = task.Name,
+                    Description = task.Description,
+                    StartDate = task.StartDate,
+                    DeadlineDate = task.DeadlineDate
+                };
+
                 _taskService.Save(taskDto);
 
                 task.TaskId = _taskService.GetAll().LastOrDefault().TaskId;
 
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, Json(task)));
+                return Json<TaskViewModel>(task);
             }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, Json(ModelState.Values)));
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, Json("Error")));
         }
 
         [HttpPost]
-        [Route("task/add/{id}")]
-        public IHttpActionResult AddUsers([FromUri]int? taskId, IEnumerable<int> userIds)
+        [Route("user/task/add/{id}")]
+        public IHttpActionResult AddUsers([FromUri]int? id, [FromBody]IEnumerable<int> userIds)
         {
-            foreach(var userId in userIds)
+            try
             {
-                try
+                foreach (var userId in userIds)
                 {
                     var userTask = new UserTaskDTO
                     {
                         StateId = 1, // default - In Progress
-                        TaskId = taskId.Value,
+                        TaskId = id.Value,
                         UserId = userId
                     };
 
                     _userTaskService.Save(userTask);
-
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task was succesfully created!"));
-
-                } catch (ValidationException ex)
-                {
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please try again later"));
                 }
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task was succesfully created!"));
+
+            }
+            catch (ValidationException ex)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please try again later"));
             }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Something went wrong"));
         }
 
+        
     }
 }
