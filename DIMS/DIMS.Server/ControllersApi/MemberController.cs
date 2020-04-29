@@ -124,13 +124,13 @@ namespace HIMS.Server.ControllersApi
 
         [HttpDelete]
         [Route("profile/delete/{id?}")]
-        public async Task<IHttpActionResult> Delete([FromUri] int? id)
+        public IHttpActionResult Delete([FromUri] int? id)
         {
             try
             {
                 if (id != null)
                 {
-                    await _userProfileService.DeleteByIdAsync(id);
+                    _userProfileService.DeleteById(id);
                 }
             }
             catch
