@@ -32,22 +32,6 @@ namespace HIMS.Server.ControllersApi
             _vUserTaskService = vUserTaskService ?? throw new ArgumentNullException(nameof(vUserTaskService));
         }
 
-        [HttpGet]
-        [Route("user/tasks/{id}")]
-        public IHttpActionResult GetVUserTasks([FromUri]int? id)
-        {
-            if (id.HasValue)
-            {
-                var vUserTaskDtos = _vUserTaskService.GetByUserId(id.Value);
-
-                var vUserTasks = Mapper.Map<IEnumerable<vUserTaskDTO>, IEnumerable<vUserTaskViewModel>>(vUserTaskDtos);
-
-                return Json(vUserTasks);
-            }
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please set user id!"));
-        }
-
         [HttpDelete]
         [Route("task/delete/{id}")]
         public IHttpActionResult Delete([FromUri]int? id)
@@ -146,35 +130,7 @@ namespace HIMS.Server.ControllersApi
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Task was empty, please send request with all task fields!"));
         }
-
-        [HttpPost]
-        [Route("user/task/add/{id}")]
-        public IHttpActionResult AddUsers([FromUri]int? id, [FromBody]IEnumerable<int> userIds)
-        {
-            try
-            {
-                foreach (var userId in userIds)
-                {
-                    var userTask = new UserTaskDTO
-                    {
-                        StateId = 1, // default - In Progress
-                        TaskId = id.Value,
-                        UserId = userId
-                    };
-
-                    _userTaskService.Save(userTask);
-                }
-
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task for users was succesfully created!"));
-
-            }
-            catch (ValidationException ex)
-            {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please try again later"));
-            }
-
-        }
-
+        
         
     }
 }
