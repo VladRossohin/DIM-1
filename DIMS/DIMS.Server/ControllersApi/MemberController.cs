@@ -40,7 +40,7 @@ namespace HIMS.Server.ControllersApi
         }
 
         [HttpGet]
-        [Route("profile/{id?}")]
+        [Route("profile/details/{id?}")]
         public IHttpActionResult GetDetails([FromUri] int? id)
         {
 
@@ -56,6 +56,23 @@ namespace HIMS.Server.ControllersApi
 
             return Json(userProfile);
 
+        }
+
+        [HttpGet] 
+        [Route("profile/{id?}")] 
+        public IHttpActionResult GetUser([FromUri]int? id)
+        {
+            if (!id.HasValue)
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
+
+            var userProfileDto = _userProfileService.GetById(id.Value);
+
+            if (userProfileDto == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
+
+            var userProfile = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+
+            return Json(userProfile);
         }
 
         [HttpPost]
