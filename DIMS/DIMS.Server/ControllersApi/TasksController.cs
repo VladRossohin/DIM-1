@@ -48,6 +48,25 @@ namespace HIMS.Server.ControllersApi
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please set user id!"));
         }
 
+        [HttpDelete]
+        [Route("task/delete/{id}")]
+        public IHttpActionResult Delete([FromUri]int? id)
+        {
+            try
+            {
+                if (id.HasValue)
+                {
+                    _taskService.DeleteById(id.Value);
+                }
+
+                else throw new ArgumentNullException();
+            } catch
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Something went wrong, please try again later!"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The task with id = {id.Value} has been succesfully deleted!"));
+        }
 
         [HttpGet]
         [Route("tasks")]
@@ -58,6 +77,27 @@ namespace HIMS.Server.ControllersApi
             var tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<TaskViewModel>>(taskDtos);
 
             return Json(tasks);
+        }
+
+        [HttpGet]
+        [Route("task/{id}")]
+        public IHttpActionResult GetTask([FromUri]int? id)
+        {
+            if (id.HasValue)
+            {
+                var taskDto = _taskService.GetById(id.Value);
+
+                if (taskDto != null)
+                {
+                    var task = Mapper.Map<TaskDTO, TaskViewModel>(taskDto);
+
+                    return Json(task);
+                }
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"There's no task with id = {id.Value}"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please set task id!"));
         }
 
         [HttpPost]
@@ -81,7 +121,30 @@ namespace HIMS.Server.ControllersApi
                 return Json<TaskViewModel>(task);
             }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, Json("Error")));
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, Json("There was an error occured creating task, please try again later!")));
+        }
+
+        [HttpPut]
+        [Route("task/edit")] 
+        public IHttpActionResult EditTask([FromBody]TaskViewModel task)
+        {
+            if (task != null)
+            {
+                var taskDto = _taskService.GetById(task.TaskId);
+
+                if (taskDto == null)
+                {
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"There's no task with id = {task.TaskId}"));
+                }
+
+                taskDto = Mapper.Map<TaskViewModel, TaskDTO>(task);
+
+                _taskService.Update(taskDto);
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The task has been succesfully updated!"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Task was empty, please send request with all task fields!"));
         }
 
         [HttpPost]
@@ -102,7 +165,7 @@ namespace HIMS.Server.ControllersApi
                     _userTaskService.Save(userTask);
                 }
 
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task was succesfully created!"));
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task for users was succesfully created!"));
 
             }
             catch (ValidationException ex)
