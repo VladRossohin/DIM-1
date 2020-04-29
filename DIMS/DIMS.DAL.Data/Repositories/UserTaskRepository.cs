@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.EF.DAL.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Repositories
 {
-    public class UserTaskRepository : IRepository<UserTask>
+    public class UserTaskRepository : IUserTaskRepository
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
@@ -62,6 +63,11 @@ namespace HIMS.EF.DAL.Data.Repositories
                 var userTask = _dIMSDBContext.UserTasks.Find(id);
                 return _dIMSDBContext.UserTasks.Remove(userTask);
             });
+        }
+
+        public UserTask GetByTaskIdAndUserId(int taskId, int userId)
+        {
+            return _dIMSDBContext.UserTasks.Where(task => task.TaskId == taskId && task.UserId == userId).FirstOrDefault();
         }
     }
 }

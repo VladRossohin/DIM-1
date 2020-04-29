@@ -27,7 +27,7 @@ namespace HIMS.EF.DAL.Data.Repositories
        
         public IRepository<UserProfile> UserProfiles => _userProfileRepository ?? new UserProfileRepository(_dimsDbContext);
         
-        public IRepository<UserTask> UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
+        public IUserTaskRepository UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
         
         public IRepository<Direction> Directions => _directionRepository ?? new DirectionRepository(_dimsDbContext);
         

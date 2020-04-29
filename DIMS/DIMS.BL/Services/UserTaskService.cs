@@ -118,7 +118,10 @@ namespace HIMS.BL.Services
 
             if (userTask != null)
             {
-                Mapper.Map(userTaskDTO, userTask);
+                userTask.TaskId = userTaskDTO.TaskId;
+                userTask.UserId = userTaskDTO.UserId;
+                userTask.StateId = userTaskDTO.StateId;
+
                 Database.Save();
             }
         }
@@ -146,6 +149,29 @@ namespace HIMS.BL.Services
 
             else
                 return false;
+        }
+
+        public UserTaskDTO GetByTaskIdAndUserId(int? taskId, int? userId)
+        {
+            if (!taskId.HasValue || !userId.HasValue)
+            {
+                throw new ValidationException("Some of ids is not set!", String.Empty);
+            }
+
+            var userTask = Database.UserTasks.GetByTaskIdAndUserId(taskId.Value, userId.Value);
+
+            if (userTask == null)
+            {
+                throw new ValidationException($"The user task with task id = {taskId.Value} and user id = {userId.Value} was not found", String.Empty);
+            }
+
+            return new UserTaskDTO
+            {
+                UserTaskId = userTask.UserTaskId,
+                StateId = userTask.StateId,
+                UserId = userTask.UserId,
+                TaskId = userTask.TaskId
+            };
         }
     }
 }

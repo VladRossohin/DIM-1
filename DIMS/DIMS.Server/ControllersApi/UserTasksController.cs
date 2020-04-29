@@ -72,5 +72,27 @@ namespace HIMS.Server.ControllersApi
 
         }
 
+        [HttpPut]
+        [Route("user/task")]
+        public IHttpActionResult SetState([FromBody]UserTaskViewModel userTask)
+        {
+            if (userTask == null)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "The user task is empty!"));
+            }
+
+            var userTaskDto = _userTaskService.GetByTaskIdAndUserId(userTask.TaskId, userTask.UserId);
+
+            if (userTaskDto != null)
+            {
+                userTaskDto.StateId = userTask.StateId;
+
+                _userTaskService.Update(userTaskDto);
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user task state has been changed!"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, "User task was not found"));
+        }
     }
 }

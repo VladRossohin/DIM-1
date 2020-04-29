@@ -121,7 +121,12 @@ namespace HIMS.Server.ControllersApi
                     return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"There's no task with id = {task.TaskId}"));
                 }
 
-                taskDto = Mapper.Map<TaskViewModel, TaskDTO>(task);
+                //taskDto = Mapper.Map<TaskViewModel, TaskDTO>(task);
+
+                taskDto.Name = task.Name;
+                taskDto.Description = task.Description;
+                taskDto.StartDate = task.StartDate;
+                taskDto.DeadlineDate = task.DeadlineDate; 
 
                 _taskService.Update(taskDto);
 
