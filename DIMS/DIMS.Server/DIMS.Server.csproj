@@ -194,6 +194,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ControllersApi\DirectionsController.cs" />
     <Compile Include="ControllersApi\MemberController.cs" />
     <Compile Include="ControllersApi\ProfilesController.cs" />
     <Compile Include="ControllersApi\TasksController.cs" />
