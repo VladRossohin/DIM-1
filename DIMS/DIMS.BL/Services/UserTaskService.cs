@@ -122,6 +122,7 @@ namespace HIMS.BL.Services
                 userTask.UserId = userTaskDTO.UserId;
                 userTask.StateId = userTaskDTO.StateId;
 
+                Database.UserTasks.Update(userTask);
                 Database.Save();
             }
         }

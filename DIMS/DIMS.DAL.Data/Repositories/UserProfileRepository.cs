@@ -48,7 +48,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public UserProfile GetById(int id)
         {
-            return _dimsDbContext.UserProfiles.Find(id);
+            return _dimsDbContext.UserProfiles.Include("UserTasks").Where(userProfile => userProfile.UserId == id).FirstOrDefault();
         }
 
         public UserProfile GetByEmail(string email)

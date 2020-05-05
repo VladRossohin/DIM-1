@@ -147,7 +147,7 @@ namespace HIMS.BL.Services
             if (_userProfile != null)
             {
                 Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);
-                _userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
+                //_userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
 
                 Database.Save();
             }
