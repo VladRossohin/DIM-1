@@ -24,7 +24,7 @@ namespace HIMS.EF.DAL.Data
         private readonly DbProviderFactory _factoryToUse = DbProviderFactories.GetFactory("System.Data.SqlClient");
 
         public DIMSDBContext()
-            : base("name=DIMSDBConnection")
+            : base("name=Dims")
         {
         }
 

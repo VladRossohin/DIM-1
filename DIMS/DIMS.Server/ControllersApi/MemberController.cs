@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 
 namespace HIMS.Server.ControllersApi
 {
@@ -72,7 +73,7 @@ namespace HIMS.Server.ControllersApi
 
             var userProfile = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
-            return Json(userProfile);
+            return Ok(userProfile);
         }
 
         [HttpPost]
@@ -84,7 +85,7 @@ namespace HIMS.Server.ControllersApi
                 var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.Save(userProfileDto);
 
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
+                return Content<UserProfileViewModel>(HttpStatusCode.Created, userProfile);
             }
 
             var validationErrors = GetErrors();
