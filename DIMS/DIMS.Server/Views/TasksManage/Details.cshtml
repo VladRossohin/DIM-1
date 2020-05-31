@@ -1,0 +1,91 @@
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h2>"@Html.DisplayFor(model => model.taskViewModel.Name)" task details</h2>
+    </div>
+
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.taskViewModel.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.taskViewModel.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.StartDate)
+            </dt>
+
+            <dd>
+                @{
+                    var startDate = Model.taskViewModel.StartDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => startDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.DeadlineDate)
+            </dt>
+
+            <dd>
+                @{
+                    var deadlineDate = Model.taskViewModel.DeadlineDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => deadlineDate)
+            </dd>
+
+            <dt>
+                For user(s):
+            </dt>
+
+            @foreach (var item in Model.userTaskListViewModel)
+            {
+                <dd>
+                    @item.UserProfile.Name @item.UserProfile.LastName
+                </dd>
+            }
+
+            <dt>
+                Task state:
+            </dt>
+
+            @foreach (var item in Model.userTaskListViewModel)
+            {
+                if (item.TaskState.StateName != ViewBag.State)
+                {
+                    <dd>
+                        @item.TaskState.StateName
+
+                    </dd>
+                    {
+                        ViewBag.State = item.TaskState.StateName;
+                    }
+                }
+            }
+
+        </dl>
+    </div>
+    <div class="modal-footer">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+
+</div>

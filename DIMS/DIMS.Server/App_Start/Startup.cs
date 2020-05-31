@@ -2,13 +2,9 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-[assembly: OwinStartup(typeof(HIMS.Server.App_Start.Startup))]
-namespace HIMS.Server.App_Start
+[assembly: OwinStartup(typeof(DIMS.Server.App_Start.Startup))]
+namespace DIMS.Server.App_Start
 {
     public class Startup
     {

@@ -1,0 +1,77 @@
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h2>Delete</h2>
+    </div>
+
+    <div class="modal-body">
+        <h3>Are you sure you want to delete this task?</h3>
+        <br />
+        <h4>
+            <b>
+                <u>
+                    @Html.DisplayFor(model => model.taskViewModel.Name)
+                </u>
+
+            </b>
+
+        </h4>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.taskViewModel.TaskId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.taskViewModel.TaskId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.taskViewModel.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.taskViewModel.Description)
+                </dd>
+
+                <dt>
+                    Start date
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.taskViewModel.StartDate)
+                </dd>
+
+                <dt>
+                    Deadline date
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.taskViewModel.DeadlineDate)
+                </dd>
+
+            </dl>
+
+        </div>
+
+        <div class="modal-footer">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" />
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
 
-namespace HIMS.BL.Models
+namespace DIMS.BL.Models
 {
+    [AutoMap(typeof(Sample))]
     public class SampleDTO
     {
         public int SampleId { get; set; }

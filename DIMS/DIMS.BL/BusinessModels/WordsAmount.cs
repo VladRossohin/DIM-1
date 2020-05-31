@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.BusinessModels
+namespace DIMS.BL.BusinessModels
 {
     public class WordsAmount
     {
         private readonly char[] delimiters = new char[] { ' ', '\r', '\n', ',', '.', ':' };
-        private string _val = String.Empty;
+        private readonly string _val = String.Empty;
 
         public WordsAmount(string val)
         {

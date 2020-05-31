@@ -1,0 +1,11 @@
+﻿@helper CreateModal(string[] values)
+{
+    foreach (var value in values)
+    {
+        <div class="modal fade" id="@value-modal">
+            <div class="modal-dialog" id="@value-dialogContent">
+                
+            </div>
+        </div>
+    }
+}

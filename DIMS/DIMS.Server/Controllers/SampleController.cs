@@ -1,34 +1,34 @@
 ﻿using AutoMapper;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.Server.Models;
-using HIMS.Server.utils;
-using System;
+using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.Server.Models;
+using DIMS.Server.utils;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers
+namespace DIMS.Server.Controllers
 {
     public class SampleController : Controller
     {
         private readonly ISampleService _sampleService;
 
-        public SampleController(ISampleService sampleService)
+        private readonly IMapper _mapper;
+
+        public SampleController(ISampleService sampleService, IMapper mapper)
         {
             _sampleService = sampleService;
+            _mapper = mapper;
+
         }
 
-        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
             var samples = new SamplesListViewModel
             {
-                Samples = Mapper.Map<IEnumerable<SampleDTO>, List<SampleViewModel>>(sampleDtos),
+                Samples = _mapper.Map<IEnumerable<SampleDTO>, List<SampleViewModel>>(sampleDtos),
                 SamplesAmount = _sampleService.GetSampleEntriesAmout(CurrentUser.IsAdmin)
             };
 
@@ -48,7 +48,7 @@ namespace HIMS.Server.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var sampleDto = Mapper.Map<SampleViewModel, SampleDTO>(sample);
+                    var sampleDto = _mapper.Map<SampleViewModel, SampleDTO>(sample);
                     _sampleService.SaveSample(sampleDto);
                     return RedirectToAction("Index");
                 }
@@ -57,6 +57,7 @@ namespace HIMS.Server.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
+
             return View(sample);
         }
 
@@ -67,14 +68,15 @@ namespace HIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -87,7 +89,7 @@ namespace HIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var sampleDto = _sampleService.GetSample(id);
+            var sampleDto = _sampleService.GetSample(id.Value);
 
             if (TryUpdateModel(sampleDto, "",
                 new string[] { nameof(sampleDto.Name), nameof(sampleDto.Description) }))
@@ -105,7 +107,8 @@ namespace HIMS.Server.Controllers
                 }
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -116,14 +119,15 @@ namespace HIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -138,19 +142,18 @@ namespace HIMS.Server.Controllers
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
 
             return View(sample);
         }
 
-        // POST: Student/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -162,8 +165,9 @@ namespace HIMS.Server.Controllers
             catch (RetryLimitExceededException/* dex */)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
-                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+                return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
+
             return RedirectToAction("Index");
         }
     }

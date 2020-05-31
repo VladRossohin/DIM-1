@@ -7,8 +7,8 @@
     <ProjectGuid>{67F222E4-888B-4368-97ED-24096FA14E27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HIMS.BL</RootNamespace>
-    <AssemblyName>HIMS.BL</AssemblyName>
+    <RootNamespace>DIMS.BL</RootNamespace>
+    <AssemblyName>DIMS.BL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -48,9 +48,17 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -63,16 +71,55 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessModels\WordsAmount.cs" />
+    <Compile Include="DTO\DirectionDTO.cs" />
+    <Compile Include="DTO\TaskDTO.cs" />
+    <Compile Include="DTO\TaskStateDTO.cs" />
+    <Compile Include="DTO\TaskTrackDTO.cs" />
+    <Compile Include="DTO\UserProfileDTO.cs" />
+    <Compile Include="DTO\UserTaskDTO.cs" />
+    <Compile Include="DTO\VTaskDTO.cs" />
+    <Compile Include="DTO\VUserProfileDTO.cs" />
+    <Compile Include="DTO\VUserProgressDTO.cs" />
+    <Compile Include="DTO\VUserTaskDTO.cs" />
+    <Compile Include="DTO\VUserTrackDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServicesModule.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />
+    <Compile Include="Interfaces\IAuthService.cs" />
+    <Compile Include="Interfaces\IDirectionService.cs" />
     <Compile Include="Interfaces\ISampleService.cs" />
+    <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Interfaces\ITaskService.cs" />
+    <Compile Include="Interfaces\IVTaskStateService.cs" />
+    <Compile Include="Interfaces\ITaskStateService.cs" />
+    <Compile Include="Interfaces\ITaskTrackService.cs" />
+    <Compile Include="Interfaces\IUserProfileService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="DTO\SampleDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Interfaces\IUserTaskService.cs" />
+    <Compile Include="Interfaces\IVService.cs" />
+    <Compile Include="Interfaces\IVTaskService.cs" />
+    <Compile Include="Interfaces\IVUserProfileService.cs" />
+    <Compile Include="Interfaces\IVUserProgressService.cs" />
+    <Compile Include="Interfaces\IVUserTaskService.cs" />
+    <Compile Include="Interfaces\IVUserTrackService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UserAuthService.cs" />
+    <Compile Include="Services\DirectionService.cs" />
     <Compile Include="Services\SampleService.cs" />
+    <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\VTaskStateService.cs" />
+    <Compile Include="Services\TaskStateService.cs" />
+    <Compile Include="Services\TaskTrackService.cs" />
+    <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserTaskService.cs" />
+    <Compile Include="Services\VTaskService.cs" />
+    <Compile Include="Services\VUserProfileService.cs" />
+    <Compile Include="Services\VUserProgressService.cs" />
+    <Compile Include="Services\VUserTaskService.cs" />
+    <Compile Include="Services\VUserTrackService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
@@ -82,6 +129,10 @@
     <ProjectReference Include="..\DIMS.DAL.Identity\DIMS.DAL.Identity.csproj">
       <Project>{8625574D-5575-49AF-BE6E-502A319E2C0A}</Project>
       <Name>DIMS.DAL.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{f8ecc0c0-7a09-4428-8d26-dce968643cf4}</Project>
+      <Name>Logger</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
