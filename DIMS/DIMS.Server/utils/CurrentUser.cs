@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
-namespace HIMS.Server.utils
+namespace DIMS.Server.utils
 {
     public static class CurrentUser
     {
-        public static bool IsAdmin
-        {
-            get { return HttpContext.Current.GetUserObject()?.IsAdmin == true; }
-        }
+        public static bool IsAdmin => HttpContext.Current.GetUserObject()?.IsAdmin == true;
 
         public static UserObject GetUserObject(this HttpContext current)
         {

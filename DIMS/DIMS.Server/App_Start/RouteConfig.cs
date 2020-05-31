@@ -1,17 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace HIMS.Server
+namespace DIMS.Server
 {
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "UserProfile",
+                url: "users/{action}/",
+                defaults: new { controller = "UserProfile", action = "Index", id = UrlParameter.Optional }
+                );
+
+            routes.MapRoute(
+                name: "TasksManage",
+                url: "tasks/{action}/",
+                defaults: new { controller = "TasksManage", action = "Index", id = UrlParameter.Optional }
+                );
 
             routes.MapRoute(
                 name: "Default",

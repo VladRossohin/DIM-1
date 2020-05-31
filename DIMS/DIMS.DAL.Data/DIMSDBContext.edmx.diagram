@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="05ef6f78c83347c292d8dbd641d2b0b9" Name="Diagram1">
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.Direction" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.Sample" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.Task" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.TaskState" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.TaskTrack" Width="1.5" PointX="7.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.UserProfile" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.UserTask" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.vTask" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.vUserProfile" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.vUserProgress" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.vUserTask" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIMS.DatabaseModel.vUserTrack" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="DIMS.DatabaseModel.FK_Direction_To_UserProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="DIMS.DatabaseModel.FK_UserTask_To_Task" ManuallyRouted="false" />
+        <AssociationConnector Association="DIMS.DatabaseModel.FK_UserTask_To_TaskState" ManuallyRouted="false" />
+        <AssociationConnector Association="DIMS.DatabaseModel.FK_UserTask_To_TaskTrack" ManuallyRouted="false" />
+        <AssociationConnector Association="DIMS.DatabaseModel.FK_UserTask_To_UserProfile" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

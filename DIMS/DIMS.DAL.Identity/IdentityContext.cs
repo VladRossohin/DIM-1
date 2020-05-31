@@ -1,12 +1,7 @@
-﻿using HIMS.EF.DAL.Identity.Models;
+﻿using DIMS.EF.DAL.Identity.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Identity
+namespace DIMS.EF.DAL.Identity
 {
     public class IdentityContext : IdentityDbContext<ApplicationUser>
     {

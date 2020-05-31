@@ -1,0 +1,168 @@
+﻿@model IEnumerable<DIMS.Server.Models.Users.VUserProfileViewModel>
+
+@{
+    ViewBag.Title = "User Profile Page";
+}
+
+<h2>User Profile CRUD Grid</h2>
+
+
+<p>
+    @Html.ActionLink("Register", "Create", null, new { @class = "btn btn-success create-user" })
+</p>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Direction
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                Age
+            </th>
+
+            <th></th>
+
+
+            @foreach(var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink(item.FullName, "Details", new { id = item.UserId}, new { @class = "details-user" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direction)
+            </td>
+            <td>
+                @{
+                    var startDate = item.StartDate.Value.ToShortDateString();
+                }
+                @Html.DisplayFor(modelItem => startDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                <div class="btn-group-vertical">
+                    @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-default progress-user" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-success edit-user" })
+                </div>
+
+                <div class="btn-group-vertical">
+                    @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-default tasks-user" })
+                    @Html.ActionLink("Delete", "DeleteByEmail", new { email = item.Email, id = 0 }, new { @class = "btn btn-danger delete-user" })
+                </div>
+
+            </td>
+        </tr>
+        }
+
+
+        </thead>
+    </table>
+
+<div class="modal fade" id="delete-user-modal">
+    <div class="modal-dialog" id="delete-user-dialogContent">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" />
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+    </div>
+</div>
+
+<div class="modal fade" id="create-user-modal">
+    <div class="modal-dialog" id="create-user-dialogContent">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="edit-user-modal">
+    <div class="modal-dialog" id="edit-user-dialogContent">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Edit" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="details-user-modal">
+    <div class="modal-dialog" id="details-user-dialogContent">
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-actions no-color">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="progress-user-modal">
+    <div class="modal-dialog" id="progress-user-dialogContent">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+    @section scripts
+{
+        <script type="text/javascript">
+
+            $(function () {
+                function openModal(formTag, actionClass) {
+                $.ajaxSetup({ cache: false });
+                $(formTag).click(function (e) {
+
+                    e.preventDefault();
+                    $.get(this.href, function (data) {
+                        $(`${actionClass}-dialogContent`).html(data);
+                        $(`${actionClass}-modal`).modal('show');
+                    });
+                });
+                };
+                openModal(".delete-user", "#delete-user");
+                openModal(".create-user", "#create-user");
+                openModal(".edit-user", "#edit-user");
+                openModal(".details-user", "#details-user");
+                openModal(".progress-user", "#progress-user");
+            });
+
+    
+        </script>
+}

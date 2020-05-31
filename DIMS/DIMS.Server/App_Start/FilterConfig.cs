@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using DIMS.Server.Filters;
 using System.Web.Mvc;
 
-namespace HIMS.Server.App_Start
+namespace DIMS.Server.App_Start
 {
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExceptionLogger());
         }
     }
 }

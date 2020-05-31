@@ -1,8 +1,0 @@
-﻿CREATE TABLE [dbo].[Direction]
-(
-	[DirectionId] INT IDENTITY NOT NULL, 
-	[Name] NVARCHAR(50) NOT NULL, 
-	[Description] NVARCHAR(MAX) NOT NULL
-
-	CONSTRAINT [PK_Direction] PRIMARY KEY ([DirectionId])
-)

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace HIMS.Server.App_Start
+namespace DIMS.Server.App_Start
 {
     public class BundleConfig
     {

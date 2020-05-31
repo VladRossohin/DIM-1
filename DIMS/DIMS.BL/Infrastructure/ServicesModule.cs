@@ -1,15 +1,12 @@
-﻿using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Data.Interfaces;
-using HIMS.EF.DAL.Data.Repositories;
-using HIMS.EF.DAL.Identity.Repositories;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Interfaces;
+using DIMS.EF.DAL.Data.Repositories;
+using DIMS.EF.DAL.Identity.Repositories;
+using Ninject;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Infrastructure
+namespace DIMS.BL.Infrastructure
 {
     public class ServicesModule : NinjectModule
     {
@@ -25,7 +22,7 @@ namespace HIMS.BL.Infrastructure
         public override void Load()
         {
             Bind<IUnitOfWork>().To<EFUnitOfWork>().WithConstructorArgument(_connectionString);
-            Bind<HIMS.EF.DAL.Identity.Interfaces.IUnitOfWork>().To<IdentityUnitOfWork>().WithConstructorArgument(_identityConnectionString);
+            Bind<DIMS.EF.DAL.Identity.Interfaces.IUnitOfWork>().To<IdentityUnitOfWork>().WithConstructorArgument(_identityConnectionString);
             Bind<IProcedureManager>().To<ProcedureManager>().WithConstructorArgument(_connectionString);
         }
     }

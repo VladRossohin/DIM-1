@@ -1,0 +1,92 @@
+﻿@model IEnumerable<DIMS.Server.Models.Tasks.vTaskViewModel>
+
+@{
+    ViewBag.Title = "Tasks Manage Page";
+    string[] values = new string[] { "create-task", "edit-task", "delete-task", "details-task" };
+}
+
+<h2>Tasks Manage Grid</h2>
+
+
+<p>
+    @Html.ActionLink("Create Task", "Create", null, new { @class = "btn btn-success create-task" })
+</p>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Name
+            </th>
+            <th scope="col">
+                Start
+            </th>
+            <th scope="col">
+                Deadline
+            </th>
+            <th scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @{
+                        var startDate = item.StartDate.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => startDate)
+                </td>
+                <td>
+                    @{
+                        var deadlineDate = item.DeadlineDate.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => deadlineDate)
+                </td>
+                <td>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Details", "Details", new { id = item.TaskId }, new { @class = "btn btn-info details-task" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TaskId }, new { @class = "btn btn-success edit-task" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TaskId }, new { @class = "btn btn-danger delete-task" })
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+@ModalFadeHelper.CreateModal(values)
+
+
+@section scripts
+    {
+    <script src="~/Scripts/helpersRazor.js"></script>
+
+    <script type="text/javascript">
+
+        openModal(".delete-task", "#delete-task");
+        openModal(".create-task", "#create-task");
+        openModal(".edit-task", "#edit-task");
+        openModal(".details-task", "#details-task");
+
+    </script>
+}
+

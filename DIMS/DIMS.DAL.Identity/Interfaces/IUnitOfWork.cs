@@ -1,11 +1,8 @@
-﻿using HIMS.EF.DAL.Identity.Models;
+﻿using DIMS.EF.DAL.Identity.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Identity.Interfaces
+namespace DIMS.EF.DAL.Identity.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
