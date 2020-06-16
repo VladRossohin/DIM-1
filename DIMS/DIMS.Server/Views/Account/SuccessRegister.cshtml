@@ -1,10 +1,12 @@
 ﻿@{
     ViewBag.Title = "Success Registration";
+    Layout = "~/Views/Shared/_LayoutMainPage.cshtml";
 }
 
-<h2>Congratulations on successful registration! Please, use your email and password for login.</h2>
-
-<p>
-    @Html.ActionLink("Login", "Login", "Account")
-</p>
+<main role="main" class="inner cover">
+    <h1 class="cover-heading">@ViewBag.Message</h1>
+    <p class="lead">
+        <a href="Login" class="btn btn-lg btn-secondary">Go to login page</a>
+    </p>
+</main>
 

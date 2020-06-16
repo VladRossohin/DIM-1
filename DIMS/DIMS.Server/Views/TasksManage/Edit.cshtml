@@ -7,12 +7,12 @@
 <div class="modal-content">
 
     <div class="modal-header">
-        <h2>Edit "@Model.taskViewModel.Name" task</h2>
+        <h2>Edit</h2>
     </div>
+    @using (Html.BeginForm())
+    {
+        <div class="modal-body">
 
-    <div class="modal-body">
-        @using (Html.BeginForm())
-        {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -21,7 +21,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.taskViewModel.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.taskViewModel.Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = Html.DisplayTextFor(model => model.taskViewModel.Name)} })
+                        @Html.EditorFor(model => model.taskViewModel.Name, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = Html.DisplayTextFor(model => model.taskViewModel.Name) } })
                         @Html.ValidationMessageFor(model => model.taskViewModel.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.taskViewModel.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.taskViewModel.Description, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = Html.DisplayTextFor(model => model.taskViewModel.Description)} })
+                        @Html.EditorFor(model => model.taskViewModel.Description, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = Html.DisplayTextFor(model => model.taskViewModel.Description) } })
                         @Html.ValidationMessageFor(model => model.taskViewModel.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.taskViewModel.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.taskViewModel.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required"} })
+                        @Html.EditorFor(model => model.taskViewModel.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
                         @Html.ValidationMessageFor(model => model.taskViewModel.StartDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -54,35 +54,24 @@
                     @Html.Label("Members", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @foreach (var item in Model.userProfileListViewModel)
-                         {
+                        {
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="SelectedUsers" value="@Convert.ToString(item.UserId)"
                                            @if (@ViewBag.TaskUsers.Contains(Convert.ToString(item.UserId))) { <text> checked</text> } /> @item.FullName
-                                </label>
-                            </div>
-                         }
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                                    </label>
+                                </div>
+                            }
                     </div>
                 </div>
             </div>
-        }
+        </div>
 
-    </div>
-
-    <div class="modal-footer">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index")
+        <div class="modal-footer">
+            <div class="d-flex justify-content-between">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
             </div>
-        }
-    </div>
-
+        </div>
+    }
 </div>

@@ -32,6 +32,5 @@ namespace DIMS.Server.ControllersApi
 
             return Json(vUserProfiles);
         }
-
     }
 }

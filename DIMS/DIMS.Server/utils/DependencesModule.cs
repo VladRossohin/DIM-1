@@ -14,6 +14,7 @@ namespace DIMS.Server.utils
         public override void Load()
         {
             Bind<ISampleService>().To<SampleService>();
+            Bind<IAuthService<UserDTO>>().To<UserAuthService>();
             Bind<IUserService>().To<UserService>();
             Bind<IUserProfileService>().To<UserProfileService>();
             Bind<IUserTaskService>().To<UserTaskService>();
@@ -22,12 +23,14 @@ namespace DIMS.Server.utils
             Bind<ITaskStateService>().To<TaskStateService>();
             Bind<ITaskTrackService>().To<TaskTrackService>();
 
+
             Bind<IVTaskService>().To<VTaskService>();
             Bind<IVTaskStateService>().To<VTaskStateService>();
             Bind<IVUserProfileService>().To<VUserProfileService>();
             Bind<IVUserProgressService>().To<VUserProgressService>();
             Bind<IVUserTaskService>().To<VUserTaskService>();
             Bind<IVUserTrackService>().To<VUserTrackService>();
+            Bind<IVTaskTrackService>().To<VTaskTrackService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

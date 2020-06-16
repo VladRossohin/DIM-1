@@ -1,8 +1,10 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "DIMS System";
+    Layout = "~/Views/Shared/_LayoutMainPage.cshtml";
 }
-<div style="text-align: center; margin-top: 8rem;">
-    <h1>Welcome to the DevIncubator Management System!</h1>
-    @Html.ActionLink("Login", "Login", "Account")
-</div>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">Welcome to DevIncubator!</h1>
+            <p class="lead">
+                <a href="Account/Login" class="btn btn-lg btn-secondary">Login</a>
+            </p>
+        </main>

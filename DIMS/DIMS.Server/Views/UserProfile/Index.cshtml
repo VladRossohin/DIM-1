@@ -56,12 +56,12 @@
             </td>
             <td>
                 <div class="btn-group-vertical">
-                    @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-default progress-user" })
+                    @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-light progress-user" })
                     @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-success edit-user" })
                 </div>
 
                 <div class="btn-group-vertical">
-                    @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-default tasks-user" })
+                    @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-light tasks-user" })
                     @Html.ActionLink("Delete", "DeleteByEmail", new { email = item.Email, id = 0 }, new { @class = "btn btn-danger delete-user" })
                 </div>
 
@@ -80,7 +80,7 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" />
+                    <input type="submit" value="Delete" class="btn btn-light" />
                     @Html.ActionLink("Back to List", "Index")
                 </div>
             }
@@ -94,7 +94,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-light" />
                 @Html.ActionLink("Back to List", "Index")
             </div>
         }
@@ -108,7 +108,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Edit" class="btn btn-default" />
+                <input type="submit" value="Edit" class="btn btn-light" />
                 @Html.ActionLink("Back to List", "Index")
             </div>
         }

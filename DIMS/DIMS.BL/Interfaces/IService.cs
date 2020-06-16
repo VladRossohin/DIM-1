@@ -2,13 +2,12 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IService<T> : IVService<T>
+    public interface IService<T>
     {
         void Save(T item);
         void Update(T item);
         void DeleteById(int? id);
 
         Task<bool> DeleteByIdAsync(int? id);
-
     }
 }

@@ -7,12 +7,12 @@
 <div class="modal-content">
 
     <div class="modal-header">
-        <h2>Create new task</h2>
+        <h2>Create task</h2>
     </div>
 
-    <div class="modal-body">
-        @using (Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
+        <div class="modal-body">
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -66,19 +66,14 @@
                         }
                     </div>
                 </div>
-
-                <div class="form-actions">
-                    <input type="submit" value="Create" class="btn btn-default col-md-offset-10" />
-                </div>
             </div>
-        }
-
-    </div>
-
-    <div class="modal-footer">
-        <div class="form-actions no-color">
-            @Html.ActionLink("Back to List", "Index")
         </div>
-    </div>
 
+        <div class="modal-footer">
+            <div class="d-flex justify-content-between">
+                <input type="submit" value="Create" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
+            </div>
+        </div>
+    }
 </div>

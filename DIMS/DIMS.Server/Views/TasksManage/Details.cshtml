@@ -3,19 +3,11 @@
 <div class="modal-content">
 
     <div class="modal-header">
-        <h2>"@Html.DisplayFor(model => model.taskViewModel.Name)" task details</h2>
+        <h2>@Html.DisplayFor(model => model.taskViewModel.Name)</h2>
     </div>
 
     <div class="modal-body">
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.taskViewModel.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.taskViewModel.Name)
-            </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.taskViewModel.Description)
             </dt>
@@ -77,15 +69,10 @@
 
         </dl>
     </div>
+
     <div class="modal-footer">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index")
+            <div class="d-flex justify-content-end">
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
             </div>
-        }
     </div>
-
 </div>

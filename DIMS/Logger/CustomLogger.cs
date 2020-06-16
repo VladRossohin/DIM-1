@@ -3,9 +3,10 @@ using System;
 
 namespace DIMS.Logger
 {
+    using Logger = NLog.Logger;
     public static class CustomLogger
     {
-        private static readonly NLog.Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static void WriteLog(LogLevel logType, Exception exception, string message, params string[] args)
         {

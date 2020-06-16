@@ -8,7 +8,6 @@ namespace DIMS.BL.DTO
     [AutoMap(typeof(Task))]
     public class TaskDTO
     {
-
         public TaskDTO()
         {
             UserTasks = new HashSet<UserTaskDTO>();
@@ -19,6 +18,7 @@ namespace DIMS.BL.DTO
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime DeadlineDate { get; set; }
+
         public virtual ICollection<UserTaskDTO> UserTasks { get; set; }
     }
 }

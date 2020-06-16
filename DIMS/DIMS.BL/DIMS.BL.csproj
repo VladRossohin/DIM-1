@@ -74,6 +74,7 @@
     <Compile Include="DTO\DirectionDTO.cs" />
     <Compile Include="DTO\TaskDTO.cs" />
     <Compile Include="DTO\TaskStateDTO.cs" />
+    <Compile Include="DTO\VTaskTrackDTO.cs" />
     <Compile Include="DTO\TaskTrackDTO.cs" />
     <Compile Include="DTO\UserProfileDTO.cs" />
     <Compile Include="DTO\UserTaskDTO.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Interfaces\ISampleService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
+    <Compile Include="Interfaces\IVTaskTrackService.cs" />
     <Compile Include="Interfaces\IVTaskStateService.cs" />
     <Compile Include="Interfaces\ITaskStateService.cs" />
     <Compile Include="Interfaces\ITaskTrackService.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Services\DirectionService.cs" />
     <Compile Include="Services\SampleService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\VTaskTrackService.cs" />
     <Compile Include="Services\VTaskStateService.cs" />
     <Compile Include="Services\TaskStateService.cs" />
     <Compile Include="Services\TaskTrackService.cs" />

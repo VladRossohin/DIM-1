@@ -12,10 +12,15 @@ using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
-    public class TasksManageController : AbstractController
+    public class TasksManageController : BaseMVCController
     {
-        public TasksManageController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService,
-            IVUserProfileService vUserProfileService, IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, IMapper mapper)
+        public TasksManageController(ITaskService taskService,
+            IVTaskService vTaskService,
+            IUserTaskService userTaskService,
+            IVUserProfileService vUserProfileService,
+            IVTaskStateService vTaskStateService,
+            IVUserTaskService vUserTaskService,
+            IMapper mapper)
             : base(taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
         {
         }
@@ -89,7 +94,7 @@ namespace DIMS.Server.Controllers.Menthor
         {
             ViewBag.TaskUsers = GetUsersForTask(id);
 
-            var taskDto = _taskService.GetById(id);
+            var taskDto = _vTaskService.GetById(id);
             var userProfileDtos = _vUserProfileService.GetAll();
 
             if (taskDto == null)
@@ -100,7 +105,7 @@ namespace DIMS.Server.Controllers.Menthor
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
                 userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos),
-                taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto)
+                taskViewModel = _mapper.Map<VTaskDTO, TaskViewModel>(taskDto)
             };
 
             return View(taskManagePageViewModel);

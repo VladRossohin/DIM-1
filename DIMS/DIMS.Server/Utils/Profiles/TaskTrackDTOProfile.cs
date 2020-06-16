@@ -7,7 +7,7 @@ namespace DIMS.BL.DTO
     {
         public TaskTrackDTOProfile()
         {
-            CreateMap<TaskTrackDTO, TaskTrack>();
+            CreateMap<TaskTrackDTO, TaskTrack>().ReverseMap();
         }
     }
 }

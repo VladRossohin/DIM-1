@@ -23,7 +23,10 @@ namespace DIMS.Server.ControllersApi
         private readonly IDirectionService _directionService;
         private readonly IMapper _mapper;
 
-        public MemberController(IUserProfileService userProfileService, IVUserProfileService vUserProfileService, IDirectionService directionService, IMapper mapper)
+        public MemberController(IUserProfileService userProfileService,
+            IVUserProfileService vUserProfileService,
+            IDirectionService directionService,
+            IMapper mapper)
         {
             _userProfileService = userProfileService ?? throw new ArgumentNullException(nameof(userProfileService));
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));
@@ -34,8 +37,11 @@ namespace DIMS.Server.ControllersApi
         private KeyValuePair<string, IEnumerable<string>>[] GetErrors()
         {
             return ModelState
-                .ToDictionary(k => k.Key, kv => kv.Value.Errors.Select(e => e.ErrorMessage).Distinct())
-                .ToArray();
+                .ToDictionary(
+                k => k.Key, 
+                kv => kv.Value.Errors.Select(e => e.ErrorMessage)
+                .Distinct()
+                ).ToArray();
         }
 
         [HttpGet]
