@@ -1,6 +1,7 @@
 ﻿using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.BL.Models;
+using DIMS.BL.Services;
 using DIMS.Server.Models;
 using Email.Interfaces;
 using Microsoft.Owin.Security;
@@ -17,7 +18,7 @@ namespace DIMS.Server.Controllers
         private readonly IUserService _userService;
         private readonly IAuthService<UserDTO> _authService;
         private readonly ISender _senderService;
-
+        
         public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
             _userService = userService;

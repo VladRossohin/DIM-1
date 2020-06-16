@@ -97,7 +97,7 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Repositories\DirectionRepository.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
-    <Compile Include="Repositories\ProcedureManager.cs" />
+    <Compile Include="Services\ProcedureManager.cs" />
     <Compile Include="Repositories\SampleRepository.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Repositories\TaskStateRepository.cs" />

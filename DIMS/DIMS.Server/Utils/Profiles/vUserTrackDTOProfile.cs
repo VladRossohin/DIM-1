@@ -7,7 +7,7 @@ namespace DIMS.BL.DTO
     {
         public VUserTrackDTOProfile()
         {
-            CreateMap<VUserTrackDTO, vUserTrack>();
+            CreateMap<VUserTrackDTO, vUserTrack>().ReverseMap();
         }
     }
 }

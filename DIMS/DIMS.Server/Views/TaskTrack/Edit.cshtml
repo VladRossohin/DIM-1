@@ -1,0 +1,47 @@
+﻿@model DIMS.Server.Models.Tasks.TaskTrackViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h2>Edit</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="modal-body">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TrackDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TrackDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.TrackDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TrackNote, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.TrackNote, new { htmlAttributes = new { @class = "form-control", required = "required" }, style = "width: 100%" })
+                        @Html.ValidationMessageFor(model => model.TrackNote, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="d-flex justify-content-between">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", new { userId = Model.UserId }, new { @class = "btn btn-light" })
+            </div>
+        </div>
+    }
+
+</div>

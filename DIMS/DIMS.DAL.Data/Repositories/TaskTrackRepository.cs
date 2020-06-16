@@ -57,5 +57,10 @@ namespace DIMS.EF.DAL.Data.Repositories
         {
             _dIMSDBContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
         }
+
+        public IEnumerable<vUserTrack> GetByUserId(int id)
+        {
+            return _dIMSDBContext.vUserTracks.Where(task => task.UserId == id).ToList();
+        }
     }
 }

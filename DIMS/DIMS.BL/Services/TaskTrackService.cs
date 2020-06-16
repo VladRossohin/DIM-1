@@ -3,6 +3,7 @@ using DIMS.BL.DTO;
 using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
+using DIMS.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The task track id value is not set", string.Empty);
+                CustomLogger.Error("Error in Task Track Service", new ValidationException("The task track id value is not set", string.Empty));
             }
 
             Database.TaskTracks.DeleteById(id.Value);
@@ -37,7 +38,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The id value is not set!", string.Empty);
+                CustomLogger.Error("Error in Task Track Service", new ValidationException("The id value is not set!", string.Empty));
             }
 
             var taskTrack = await Database.TaskTracks.DeleteByIdAsync(id.Value);
@@ -52,18 +53,13 @@ namespace DIMS.BL.Services
             }
         }
 
-        public void Dispose()
-        {
-            Database.Dispose();
-        }
-
         public TaskTrackDTO GetById(int id)
         {
             var task = Database.TaskTracks.GetById(id);
 
             if (task == null)
             {
-                throw new ValidationException($"The task track with id = {id} was not found", string.Empty);
+                CustomLogger.Error("Error in Task Track Service", new ValidationException($"The task track with id = {id} was not found", string.Empty));
             }
 
             return _mapper.Map<TaskTrack, TaskTrackDTO>(task);
@@ -112,10 +108,15 @@ namespace DIMS.BL.Services
 
             if (tracks == null)
             {
-                throw new ValidationException($"The Task Track with id = {userId} was not found", "");
+                CustomLogger.Error("Error in Task Track Service", new ValidationException($"The Task Track with id = {userId} was not found", string.Empty));
             }
 
             return _mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
+        }
+
+        public void Dispose()
+        {
+            Database.Dispose();
         }
     }
 }

@@ -2,6 +2,7 @@
 using DIMS.EF.DAL.Data;
 using DIMS.EF.DAL.Data.Interfaces;
 using DIMS.EF.DAL.Data.Repositories;
+using DIMS.EF.DAL.Data.Services;
 using DIMS.EF.DAL.Identity.Repositories;
 using Ninject;
 using Ninject.Modules;

@@ -12,7 +12,7 @@ namespace DIMS.BL.DTO
         {
             TaskTracks = new HashSet<TaskTrackDTO>();
         }
-
+        
         public int UserTaskId { get; set; }
         public int TaskId { get; set; }
         public int UserId { get; set; }
@@ -20,7 +20,7 @@ namespace DIMS.BL.DTO
 
         public virtual TaskDTO Task { get; set; }
         public virtual TaskStateDTO TaskState { get; set; }
-        public virtual IEnumerable<TaskTrackDTO> TaskTracks { get; set; }
+        public virtual ICollection<TaskTrackDTO> TaskTracks { get; set; }
         public virtual UserProfileDTO UserProfile { get; set; }
     }
 }

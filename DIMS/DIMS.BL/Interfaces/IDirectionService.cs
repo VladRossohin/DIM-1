@@ -2,7 +2,7 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IDirectionService : IService<DirectionDTO>
+    public interface IDirectionService : IService<DirectionDTO>, IVService<DirectionDTO>
     {
 
     }

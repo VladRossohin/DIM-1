@@ -44,5 +44,12 @@ namespace DIMS.BL.Services
             return _mapper.Map<List<vUserTrack>, ICollection<VUserTrackDTO>>(
                 Database.VUserTracks.GetAll().ToList());
         }
+
+        public IEnumerable<VUserTrackDTO> GetTracksForUser(int userId)
+        {
+            var tracks = Database.VUserTracks.Find(item => item.UserId == userId);
+
+            return _mapper.Map<IEnumerable<vUserTrack>, List<VUserTrackDTO>>(tracks);
+        }
     }
 }

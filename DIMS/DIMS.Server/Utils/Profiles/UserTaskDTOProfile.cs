@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DIMS.EF.DAL.Data;
+using DIMS.Server.Models.Tasks;
 
 namespace DIMS.BL.DTO
 {
@@ -7,7 +8,8 @@ namespace DIMS.BL.DTO
     {
         public UserTaskDTOProfile()
         {
-            CreateMap<UserTaskDTO, UserTask>();
+            CreateMap<UserTaskDTO, UserTask>().ReverseMap();
+            CreateMap<UserTaskDTO, UserTaskViewModel>().ReverseMap();
         }
     }
 }

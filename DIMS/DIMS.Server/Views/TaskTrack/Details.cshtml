@@ -1,0 +1,50 @@
+﻿@model DIMS.Server.Models.Tasks.TaskTrackViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h2>Track details</h2>
+    </div>
+
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaskName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrackNote)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TrackNote)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrackDate)
+            </dt>
+
+            <dd>
+                @{
+                    var trackDate = Model.TrackDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => trackDate)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="modal-footer">
+            <div class="d-flex justify-content-end">
+                @Html.ActionLink("Back to List", "Index", new { userId = Model.UserId }, new { @class = "btn btn-light" })
+            </div>
+    </div>
+</div>

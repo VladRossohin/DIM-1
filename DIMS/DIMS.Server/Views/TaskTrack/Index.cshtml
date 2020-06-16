@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DIMS.Server.Models.Tasks.TaskTrackViewModel>
+
+@{
+    ViewBag.Title = "Task Tracks Page";
+    string[] values = new string[] { "edit-task-track" , "delete-task-track", "details-task-track"};
+}
+
+<h2>This is your task tracks</h2>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Task
+            </th>
+            <th scope="col">
+                Note
+            </th>
+            <th scope="col">
+                Date
+            </th>
+            <th scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTrackId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackDate)
+                </td>
+                <td class="d-flex justify-content-around">
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Details", "Details", new { id = item.TaskTrackId }, new { @class = "btn btn-info details-task-track" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TaskTrackId }, new { @class = "btn btn-success edit-task-track" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TaskTrackId }, new { @class = "btn btn-danger delete-task-track" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@ModalFadeHelper.CreateModal(values)
+
+
+@section scripts
+    {
+    <script src="~/Scripts/helpersRazor.js"></script>
+
+    <script type="text/javascript">
+
+        openModal(`.edit-task-track`, `#edit-task-track`);
+        openModal(`.delete-task-track`, `#delete-task-track`);
+        openModal(`.details-task-track`, `#details-task-track`);
+
+    </script>
+}

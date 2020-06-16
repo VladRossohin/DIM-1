@@ -6,20 +6,12 @@
 
 <div class="modal-content">
     <div class="modal-header">
-        <h2>Delete</h2>
+        <h2>Are you sure you want to delete this task?</h2>
     </div>
 
     <div class="modal-body">
-        <h3>Are you sure you want to delete this task?</h3>
-        <br />
         <h4>
-            <b>
-                <u>
-                    @Html.DisplayFor(model => model.taskViewModel.Name)
-                </u>
-
-            </b>
-
+            @Html.DisplayFor(model => model.taskViewModel.Name)
         </h4>
         <div>
             <hr />
@@ -65,9 +57,9 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" />
-                    @Html.ActionLink("Back to List", "Index")
+                <div class="d-flex justify-content-between">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
                 </div>
             }
         </div>
