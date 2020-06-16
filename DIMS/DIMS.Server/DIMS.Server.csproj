@@ -211,13 +211,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ControllersApi\MemberController.cs" />
     <Compile Include="ControllersApi\ProfilesController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ErrorsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="ControllersApi\AccountController.cs" />
+    <Compile Include="ControllersApi\ErrorsController.cs" />
+    <Compile Include="ControllersApi\HomeController.cs" />
     <Compile Include="Controllers\Menthor\AbstractController.cs" />
     <Compile Include="Controllers\Menthor\TasksManageController.cs" />
     <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
-    <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="ControllersApi\SampleController.cs" />
     <Compile Include="Controllers\Tasks\TasksController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
     <Compile Include="Controllers\Users\UserProgressController.cs" />
@@ -226,6 +226,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
+    <Compile Include="Models\Tasks\vTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\vUserTaskViewModel.cs" />
     <Compile Include="Utils\Profiles\DirectionViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -239,7 +241,6 @@
     <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
     <Compile Include="Models\Tasks\TaskViewModel.cs" />
     <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
-    <Compile Include="Models\Tasks\vTaskViewModel.cs" />
     <Compile Include="Utils\Profiles\vTaskViewModelProfile.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />

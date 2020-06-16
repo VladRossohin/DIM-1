@@ -91,7 +91,6 @@
     <Compile Include="Interfaces\IProcedureManager.cs" />
     <Compile Include="Interfaces\IUserTaskRepository.cs" />
     <Compile Include="Interfaces\IViewRepository.cs" />
-    <Compile Include="Interfaces\IUserTaskRepository.cs" />
     <Compile Include="Interfaces\IvUserProfileRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IRepository.cs" />

@@ -72,7 +72,7 @@ namespace DIMS.Server.ControllersApi
             if (userProfileDto == null)
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
 
-            var userProfile = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var userProfile = _mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
             return Ok(userProfile);
         }
