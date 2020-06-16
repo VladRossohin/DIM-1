@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 
 namespace DIMS.Server.ControllersApi
 {
@@ -39,7 +40,7 @@ namespace DIMS.Server.ControllersApi
         }
 
         [HttpGet]
-        [Route("profile/{id?}")]
+        [Route("profile/details/{id?}")]
         public IHttpActionResult GetDetails([FromUri] int? id)
         {
             if (!id.HasValue)
@@ -59,6 +60,23 @@ namespace DIMS.Server.ControllersApi
             return Json(userProfile);
         }
 
+        [HttpGet] 
+        [Route("profile/{id?}")] 
+        public IHttpActionResult GetUser([FromUri]int? id)
+        {
+            if (!id.HasValue)
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
+
+            var userProfileDto = _userProfileService.GetById(id.Value);
+
+            if (userProfileDto == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
+
+            var userProfile = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+
+            return Ok(userProfile);
+        }
+
         [HttpPost]
         [Route("create")]
         public IHttpActionResult Create([FromBody]UserProfileViewModel userProfile)
@@ -68,7 +86,7 @@ namespace DIMS.Server.ControllersApi
                 var userProfileDto = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.Save(userProfileDto);
 
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
+                return Content<UserProfileViewModel>(HttpStatusCode.Created, userProfile);
             }
 
             var validationErrors = GetErrors();
@@ -108,13 +126,13 @@ namespace DIMS.Server.ControllersApi
 
         [HttpDelete]
         [Route("profile/delete/{id?}")]
-        public async Task<IHttpActionResult> Delete([FromUri] int? id)
+        public IHttpActionResult Delete([FromUri] int? id)
         {
             try
             {
                 if (id != null)
                 {
-                    await _userProfileService.DeleteByIdAsync(id);
+                    _userProfileService.DeleteById(id);
                 }
             }
             catch
