@@ -12,10 +12,11 @@ using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http.Results;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace HIMS.Tests.Controller
+namespace DIMS.Tests.Controller
 {
     [TestClass]
     public class TestMemberController
@@ -134,7 +135,8 @@ namespace HIMS.Tests.Controller
 
             _mockUserProfileService.Setup(s => s.Save(userDto)).Callback(() => this.userProfileDTOs.Add(userDto));
 
-            _controller = new MemberController(_mockUserProfileService.Object, _mockVUserProfileService.Object, _mockDirectionService.Object, _mapper.Object);
+            _controller = new MemberController(_mockUserProfileService.Object, _mockVUserProfileService.Object, 
+                _mockDirectionService.Object, _mapper.Object);
             
             var result = _controller.Create(user) as NegotiatedContentResult<UserProfileViewModel>;
 
@@ -171,6 +173,33 @@ namespace HIMS.Tests.Controller
 
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(1, result.Content.UserId);
+        }
+
+        [TestMethod]
+        public void DeleteUserById_ShouldDeleteUser()
+        {
+            autoMapperModule.Load();
+
+            _mockUserProfileService = new Mock<IUserProfileService>();
+            _mockVUserProfileService = new Mock<IVUserProfileService>();
+            _mockDirectionService = new Mock<IDirectionService>();
+
+            var users = GetTestUserProfileDtos();
+
+            var userIdToDelete = 1;
+
+            _mockUserProfileService.Setup(s => s.DeleteById(userIdToDelete)).Callback(() => users.Remove(users.Where(user => user.UserId == userIdToDelete).FirstOrDefault()));
+            _mockUserProfileService.Setup(s => s.GetById(1)).Returns(users.Where(user => user.UserId == 1).FirstOrDefault());
+
+            _controller = new MemberController(_mockUserProfileService.Object, _mockVUserProfileService.Object, _mockDirectionService.Object, _mapper.Object);
+
+            var result = _controller.Delete(userIdToDelete) as OkNegotiatedContentResult<ResponseMessageResult>;
+
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(HttpStatusCode.OK, result.Content.Response.StatusCode);
+
+
         }
 
         private List<UserProfileDTO> GetTestUserProfileDtos()
