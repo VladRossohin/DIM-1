@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models;
-using HIMS.Server.Models.Tasks;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models;
+using DIMS.Server.Models.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +13,41 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace HIMS.Server.ControllersApi
+namespace DIMS.Server.ControllersApi
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api")]
     public class TasksController : ApiController
     {
         private readonly ITaskService _taskService;
-        private readonly IvTaskService _vTaskService;
+        private readonly IVTaskService _vTaskService;
         private readonly IUserTaskService _userTaskService;
-        private readonly IvUserTaskService _vUserTaskService;
+        private readonly IVUserTaskService _vUserTaskService;
 
-        public TasksController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, IvUserTaskService vUserTaskService)
+        private readonly IMapper _mapper;
+
+        public TasksController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService, IVUserTaskService vUserTaskService, IMapper mapper)
         {
             _taskService = taskService ?? throw new ArgumentNullException(nameof(taskService));
             _vTaskService = vTaskService ?? throw new ArgumentNullException(nameof(vTaskService));
             _userTaskService = userTaskService ?? throw new ArgumentNullException(nameof(userTaskService));
             _vUserTaskService = vUserTaskService ?? throw new ArgumentNullException(nameof(vUserTaskService));
+            _mapper = mapper;
         }
 
         [HttpDelete]
         [Route("task/delete/{id}")]
         public IHttpActionResult Delete([FromUri]int? id)
         {
-            try
-            {
-                if (id.HasValue)
-                {
-                    _taskService.DeleteById(id.Value);
-                }
 
-                else throw new ArgumentNullException();
-            } catch
+            if (id.HasValue)
             {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Something went wrong, please try again later!"));
+                _taskService.DeleteById(id.Value);
+            }
+
+            else
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "The task id value is not set!"));
             }
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The task with id = {id.Value} has been succesfully deleted!"));
@@ -58,13 +59,13 @@ namespace HIMS.Server.ControllersApi
         {
             var taskDtos = _vTaskService.GetAll();
 
-            var tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<TaskViewModel>>(taskDtos);
+            var tasks = _mapper.Map<IEnumerable<VTaskDTO>, IEnumerable<TaskViewModel>>(taskDtos);
 
             return Json(tasks);
         }
 
         [HttpGet]
-        [Route("task/{id}")]
+        [Route("task/{id?}")]
         public IHttpActionResult GetTask([FromUri]int? id)
         {
             if (id.HasValue)
@@ -73,7 +74,7 @@ namespace HIMS.Server.ControllersApi
 
                 if (taskDto != null)
                 {
-                    var task = Mapper.Map<TaskDTO, TaskViewModel>(taskDto);
+                    var task = _mapper.Map<TaskDTO, TaskViewModel>(taskDto);
 
                     return Json(task);
                 }
@@ -109,7 +110,7 @@ namespace HIMS.Server.ControllersApi
         }
 
         [HttpPut]
-        [Route("task/edit")] 
+        [Route("task/edit")]
         public IHttpActionResult EditTask([FromBody]TaskViewModel task)
         {
             if (task != null)
@@ -121,12 +122,10 @@ namespace HIMS.Server.ControllersApi
                     return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"There's no task with id = {task.TaskId}"));
                 }
 
-                //taskDto = Mapper.Map<TaskViewModel, TaskDTO>(task);
-
                 taskDto.Name = task.Name;
                 taskDto.Description = task.Description;
                 taskDto.StartDate = task.StartDate;
-                taskDto.DeadlineDate = task.DeadlineDate; 
+                taskDto.DeadlineDate = task.DeadlineDate;
 
                 _taskService.Update(taskDto);
 
@@ -135,7 +134,7 @@ namespace HIMS.Server.ControllersApi
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Task was empty, please send request with all task fields!"));
         }
-        
-        
+
+
     }
 }

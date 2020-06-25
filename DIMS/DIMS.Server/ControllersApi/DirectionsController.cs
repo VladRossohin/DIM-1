@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Directions;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Directions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +17,12 @@ namespace HIMS.Server.ControllersApi
     {
         private readonly IDirectionService _directionService;
 
-        public DirectionsController(IDirectionService directionService)
+        private readonly IMapper _mapper;
+
+        public DirectionsController(IDirectionService directionService, IMapper mapper)
         {
             _directionService = directionService;
+            _mapper = mapper;
         }
 
         
@@ -29,7 +32,7 @@ namespace HIMS.Server.ControllersApi
         {
             var directionDtos = _directionService.GetAll();
 
-            var directions = Mapper.Map<IEnumerable<DirectionDTO>, IEnumerable<DirectionViewModel>>(directionDtos);
+            var directions = _mapper.Map<IEnumerable<DirectionDTO>, IEnumerable<DirectionViewModel>>(directionDtos);
 
             return Json(directions);
         }

@@ -5,6 +5,8 @@ namespace DIMS.BL.Interfaces
 {
     public interface IUserTaskService : IService<UserTaskDTO>
     {
+        void Save(int id, IEnumerable<int> userIds);
+        UserTaskDTO GetById(int id);
         TaskDTO GetTask(int id);
         TaskStateDTO GetTaskState(int id);
         IEnumerable<TaskTrackDTO> GetTaskTracks(int id);

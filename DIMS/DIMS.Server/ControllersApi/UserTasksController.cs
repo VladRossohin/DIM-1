@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Tasks;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Tasks;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace HIMS.Server.ControllersApi
+namespace DIMS.Server.ControllersApi
 {
 
     [EnableCors("*", "*", "*")]
@@ -20,12 +20,15 @@ namespace HIMS.Server.ControllersApi
     public class UserTasksController : ApiController
     {
         private readonly IUserTaskService _userTaskService;
-        private readonly IvUserTaskService _vUserTaskService;
+        private readonly IVUserTaskService _vUserTaskService;
 
-        public UserTasksController(IUserTaskService userTaskService, IvUserTaskService vUserTaskService)
+        private readonly IMapper _mapper;
+
+        public UserTasksController(IUserTaskService userTaskService, IVUserTaskService vUserTaskService, IMapper mapper)
         {
             _userTaskService = userTaskService;
             _vUserTaskService = vUserTaskService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -36,7 +39,7 @@ namespace HIMS.Server.ControllersApi
             {
                 var vUserTaskDtos = _vUserTaskService.GetByUserId(id.Value);
 
-                var vUserTasks = Mapper.Map<IEnumerable<vUserTaskDTO>, IEnumerable<vUserTaskViewModel>>(vUserTaskDtos);
+                var vUserTasks = _mapper.Map<IEnumerable<VUserTaskDTO>, IEnumerable<vUserTaskViewModel>>(vUserTaskDtos);
 
                 return Json(vUserTasks);
             }
@@ -48,28 +51,14 @@ namespace HIMS.Server.ControllersApi
         [Route("user/task/add/{id}")]
         public IHttpActionResult AddUsers([FromUri]int? id, [FromBody]IEnumerable<int> userIds)
         {
-            try
+            if (!id.HasValue)
             {
-                foreach (var userId in userIds)
-                {
-                    var userTask = new UserTaskDTO
-                    {
-                        StateId = 1, // default - In Progress
-                        TaskId = id.Value,
-                        UserId = userId
-                    };
-
-                    _userTaskService.Save(userTask);
-                }
-
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task for users was succesfully created!"));
-
-            }
-            catch (ValidationException ex)
-            {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Please try again later"));
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "The task id value is not set!"));
             }
 
+            _userTaskService.Save(id.Value, userIds);
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Task for users was succesfully created!"));
         }
 
         [HttpPut]
@@ -81,7 +70,7 @@ namespace HIMS.Server.ControllersApi
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "The user task is empty!"));
             }
 
-            var userTaskDto = _userTaskService.GetByTaskIdAndUserId(userTask.TaskId, userTask.UserId);
+            var userTaskDto = _userTaskService.GetById(userTask.UserTaskId);
 
             if (userTaskDto != null)
             {

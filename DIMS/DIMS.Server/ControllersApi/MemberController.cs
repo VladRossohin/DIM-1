@@ -39,7 +39,7 @@ namespace DIMS.Server.ControllersApi
         {
             return ModelState
                 .ToDictionary(
-                k => k.Key, 
+                k => k.Key,
                 kv => kv.Value.Errors.Select(e => e.ErrorMessage)
                 .Distinct()
                 ).ToArray();
@@ -66,17 +66,21 @@ namespace DIMS.Server.ControllersApi
             return Json(userProfile);
         }
 
-        [HttpGet] 
-        [Route("profile/{id?}")] 
+        [HttpGet]
+        [Route("profile/{id?}")]
         public IHttpActionResult GetUser([FromUri]int? id)
         {
             if (!id.HasValue)
+            {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
+            }
 
             var userProfileDto = _userProfileService.GetById(id.Value);
 
             if (userProfileDto == null)
+            {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
+            }
 
             var userProfile = _mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
@@ -134,38 +138,28 @@ namespace DIMS.Server.ControllersApi
         [Route("profile/delete/{id?}")]
         public IHttpActionResult Delete([FromUri] int? id)
         {
-            try
+
+            if (id != null)
             {
-                if (id != null)
-                {
-                    _userProfileService.DeleteById(id);
-                }
-            }
-            catch
-            {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"There's no user with id = {id.Value}"));
+                _userProfileService.DeleteById(id);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
             }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "The user id value is not set!"));
         }
 
         [HttpDelete]
         [Route("profile/deleteByEmail/{email?}")]
         public async Task<IHttpActionResult> DeleteByEmail([FromUri] string email)
         {
-            try
+            if (email != null)
             {
-                if (email != null)
-                {
-                    await _userProfileService.DeleteByEmailAsync(email);
-                }
-            }
-            catch
-            {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, $"There's no user with email = {email}!"));
+                await _userProfileService.DeleteByEmailAsync(email);
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
             }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, $"The user email value is not set!"));
         }
     }
 }

@@ -153,5 +153,20 @@ namespace DIMS.BL.Services
             Database.UserTasks.Delete(taskId, userId);
             Database.Save();
         }
+
+        public void Save(int id, IEnumerable<int> userIds)
+        {
+            foreach (var userId in userIds)
+            {
+                var userTask = new UserTaskDTO
+                {
+                    StateId = 1, // default - In Progress
+                    TaskId = id,
+                    UserId = userId
+                };
+
+                Save(userTask);
+            }
+        }
     }
 }
