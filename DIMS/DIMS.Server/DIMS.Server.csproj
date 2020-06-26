@@ -332,7 +332,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActionLinkViewModel.cs" />
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
+    <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Models\Partials\ModalButtonViewModel.cs" />
     <Compile Include="Models\Tasks\VUserTaskViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
@@ -390,7 +392,6 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\SuccessRegister.cshtml" />
@@ -434,6 +435,8 @@
     <Content Include="Views\UserTask\Index.cshtml" />
     <Content Include="Views\UserTask\Create.cshtml" />
     <Content Include="Views\UserTask\Details.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\UserProfile\MentorIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

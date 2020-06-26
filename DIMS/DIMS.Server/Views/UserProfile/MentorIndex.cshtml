@@ -1,0 +1,76 @@
+﻿@model IEnumerable<DIMS.Server.Models.Users.VUserProfileViewModel>
+
+@{
+    ViewBag.Title = "User Profile Page";
+    string[] values = new string[] { "details-user" };
+}
+
+<h2>User Profile Grid</h2>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Full Name
+            </th>
+            <th scope="col">
+                Direction
+            </th>
+            <th scope="col">
+                Start
+            </th>
+            <th scope="col">
+                Age
+            </th>
+            <th scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direction)
+                </td>
+                <td>
+                    @{
+                        var startDate = item.StartDate.Value.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td class="d-flex justify-content-around">
+                    @Html.ActionLink("Progress", "Index", "UserProgress", new { id = item.UserId }, new { @class = "btn btn-light progress-user" })
+                    @Html.ActionLink("Tasks", "Index", "UserTask", new { id = item.UserId }, new { @class = "btn btn-light tasks-user" })
+                    @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "btn btn-info details-user" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@ModalFadeHelper.CreateModal(values)
+
+@section scripts
+{
+    <script src="~/Scripts/helpersRazor.js"></script>
+    <script type="text/javascript">
+
+        openModal(".details-user", "#details-user");
+
+    </script>
+}

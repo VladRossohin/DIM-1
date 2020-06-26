@@ -67,7 +67,7 @@ namespace DIMS.Server.Controllers
         {
             AuthenticationManager.SignOut();
 
-            return RedirectToAction("Index", "Sample");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()

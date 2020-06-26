@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
-    [Authorize]
+    [Authorize(Roles = "user" )]
     [RoutePrefix("track")]
     public class TaskTrackController : Controller
     {

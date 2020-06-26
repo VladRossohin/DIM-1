@@ -13,6 +13,7 @@ using System.Web.Mvc;
 namespace DIMS.Server.Controllers.Menthor
 {
     [RoutePrefix("tasks")]
+    [Authorize(Roles = "admin, mentor")]
     public class TasksManageController : BaseMVCController
     {
         public TasksManageController(ITaskService taskService,
@@ -26,7 +27,6 @@ namespace DIMS.Server.Controllers.Menthor
         {
         }
 
-        [Authorize(Roles = "admin, mentor")]
         [Route("all")]
         public ActionResult Index()
         {
