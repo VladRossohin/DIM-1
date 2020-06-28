@@ -101,7 +101,7 @@ namespace DIMS.Server.ControllersApi
 
                 _taskService.Save(taskDto);
 
-                task.TaskId = _taskService.GetAll().LastOrDefault().TaskId;
+                task.TaskId = _taskService.GetAll().Last(t => t.Name == task.Name && t.StartDate == task.StartDate).TaskId;
 
                 return Json<TaskViewModel>(task);
             }
