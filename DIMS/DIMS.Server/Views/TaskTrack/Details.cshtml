@@ -1,4 +1,4 @@
-﻿@model DIMS.Server.Models.Tasks.TaskTrackViewModel
+﻿@model DIMS.Server.Models.Tasks.VUserTrackViewModel
 
 @{
     Layout = null;
@@ -42,9 +42,5 @@
         </dl>
     </div>
 
-    <div class="modal-footer">
-            <div class="d-flex justify-content-end">
-                @Html.ActionLink("Back to List", "Index", new { userId = Model.UserId }, new { @class = "btn btn-light" })
-            </div>
-    </div>
+    @Html.Partial("ModalButtons", new ModalButtonViewModel { IsItDetails = true, Id = Model.UserId })
 </div>

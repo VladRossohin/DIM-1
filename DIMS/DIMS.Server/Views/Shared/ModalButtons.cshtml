@@ -1,0 +1,17 @@
+﻿@model DIMS.Server.Models.Partials.ModalButtonViewModel
+
+    <div class="modal-footer">
+        @if (Model.IsItDetails == true)
+        {
+            <div class="d-flex justify-content-end">
+                @Html.ActionLink("Back to List", "Index", new { Model.Id }, new { @class = "btn btn-light" })
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-between">
+                <input type="submit" value="@Model.Value" class="btn btn-@Model.ButtonClass" />
+                @Html.ActionLink("Back to List", "Index", new { Model.Id }, new { @class = "btn btn-light" })
+            </div>
+        }
+    </div>

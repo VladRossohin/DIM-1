@@ -10,7 +10,8 @@ using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
-    [Authorize]
+    [Authorize(Roles = "user" )]
+    [RoutePrefix("track")]
     public class TaskTrackController : Controller
     {
         private readonly ITaskTrackService _taskTrackService;
@@ -30,17 +31,18 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpGet]
-        [Route("track/{userId}")]
-        public ActionResult Index(int userId)
+        [Route("{id}")]
+        public ActionResult Index(int id)
         {
-            var vUserTrackDTOs = _vUserTrackService.GetTracksForUser(userId);
+            var vUserTrackDTOs = _vUserTrackService.GetTracksForUser(id);
 
-            var taskTrackViewModels = _mapper.Map<IEnumerable<VUserTrackDTO>, IEnumerable<TaskTrackViewModel>>(vUserTrackDTOs);
+            var VUserTrackViewModels = _mapper.Map<IEnumerable<VUserTrackDTO>, IEnumerable<VUserTrackViewModel>>(vUserTrackDTOs);
 
-            return View(taskTrackViewModels);
+            return View(VUserTrackViewModels);
         }
 
         [HttpGet]
+        [Route("edit/{id}")]
         public ActionResult Edit(int id)
         {
             var taskTrackDto = _vUserTrackService.GetById(id);
@@ -50,37 +52,38 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(taskTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(taskTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpPost]
+        [Route("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TaskTrackViewModel taskTrackViewModel, int id)
+        public ActionResult Edit(VUserTrackViewModel VUserTrackViewModel, int id)
         {
             var vTaskTrackDto = _vTaskTrackService.GetById(id);
             var vUserTrackDto = _vUserTrackService.GetById(id);
-            vTaskTrackDto.TrackDate = taskTrackViewModel.TrackDate;
-            vTaskTrackDto.TrackNote = taskTrackViewModel.TrackNote;
+            vTaskTrackDto.TrackDate = VUserTrackViewModel.TrackDate;
+            vTaskTrackDto.TrackNote = VUserTrackViewModel.TrackNote;
 
             try
             {
                 _vTaskTrackService.Update(vTaskTrackDto);
-                return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
+                return RedirectToAction("Index", new { id = vUserTrackDto.UserId });
             }
             catch (RetryLimitExceededException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
-            return PartialView(taskTrackViewModel);
+            return PartialView(VUserTrackViewModel);
         }
 
         [HttpGet]
+        [Route("details/{id}")]
         public ActionResult Details(int id)
         {
-
             var vUserTrackDto = _vUserTrackService.GetById(id);
 
             if (vUserTrackDto == null)
@@ -88,15 +91,15 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(vUserTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpGet]
+        [Route("delete/{id}")]
         public ActionResult Delete(int id)
         {
-
             var vUserTrackDto = _vUserTrackService.GetById(id);
 
             if (vUserTrackDto == null)
@@ -104,12 +107,13 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(vUserTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpPost]
+        [Route("delete/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
@@ -124,7 +128,7 @@ namespace DIMS.Server.Controllers.Menthor
                 return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
 
-            return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
+            return RedirectToAction("Index", new { id = vUserTrackDto.UserId });
         }
     }
 }

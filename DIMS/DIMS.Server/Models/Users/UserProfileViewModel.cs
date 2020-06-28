@@ -40,14 +40,14 @@ namespace DIMS.Server.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? BirthDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime BirthDate { get; set; }
 
         [Range(0, 10, ErrorMessage = "University Average Score must be in range from 0 to 10")]
-        public double? UniversityAverageScore { get; set; }
+        public double UniversityAverageScore { get; set; }
 
         [Range(0, 10, ErrorMessage = "Math Score must be in range from 0 to 10")]
-        public double? MathScore { get; set; }
+        public double MathScore { get; set; }
 
         [StringLength(100, ErrorMessage = "The maximum length of Address is 100 characters.")]
         public string Address { get; set; }
@@ -60,7 +60,7 @@ namespace DIMS.Server.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; }
     }
 }

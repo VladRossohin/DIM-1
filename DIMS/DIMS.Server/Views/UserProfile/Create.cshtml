@@ -1,18 +1,18 @@
 ﻿@model DIMS.Server.Models.UserProfileViewModel
 
-    <div class="modal-content">
+<div class="modal-content">
 
-        <div class="modal-header">
-            <h2>Register new user</h2>
-        </div>
-        
+    <div class="modal-header">
+        <h2>Register new user</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
         <div class="modal-body">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                
+
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UniversityAverageScore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type="number", min="0", max="10" } })
+                        @Html.EditorFor(model => model.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "10" } })
                         @Html.ValidationMessageFor(model => model.UniversityAverageScore, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MathScore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.MathScore, new { htmlAttributes = new { @class = "form-control", type="number", min="0", max="10" } })
+                        @Html.EditorFor(model => model.MathScore, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", max = "10" } })
                         @Html.ValidationMessageFor(model => model.MathScore, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type="date", required="required" } })
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -119,19 +119,9 @@
                         @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="form-actions form-group col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-light" />
-                </div>  
-            </div>
-            }
-
-        </div>
-        
-        <div class="modal-footer">
-            <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index")
             </div>
         </div>
 
-    </div>
+        @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Create", ButtonClass = "success" })
+    }
+</div>

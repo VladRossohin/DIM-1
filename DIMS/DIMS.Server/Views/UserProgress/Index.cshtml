@@ -1,11 +1,11 @@
-﻿@model IEnumerable<DIMS.Server.Models.Tasks.VUserTrackViewModel>
+﻿@model DIMS.Server.Models.Users.VUserProgressesListViewModel
 
 @{
-    ViewBag.Title = "Task Tracks Page";
-    string[] values = new string[] { "edit-task-track" , "delete-task-track", "details-task-track"};
+    ViewBag.Title = "User Progress Page";
+    string[] values = new string[] { "details-progress" };
 }
 
-<h2>This is your task tracks</h2>
+<h2>@Html.DisplayFor(model => model.VUserProfile.FullName)'s progress:</h2>
 
 <table class="table table-bordered">
     <thead class="thead-dark">
@@ -29,11 +29,11 @@
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.VUserProgresses)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TaskTrackId)
+                    @Html.DisplayFor(modelItem => item.TaskId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TaskName)
@@ -46,23 +46,19 @@
                 </td>
                 <td class="d-flex justify-content-around">
                     <div class="btn-group-vertical">
-                        @Html.ActionLink("Details", "Details", new { id = item.TaskTrackId }, new { @class = "btn btn-info details-task-track" })
-                    </div>
-                    <div class="btn-group-vertical">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.TaskTrackId }, new { @class = "btn btn-success edit-task-track" })
-                    </div>
-                    <div class="btn-group-vertical">
-                        @Html.ActionLink("Delete", "Delete", new { id = item.TaskTrackId }, new { @class = "btn btn-danger delete-task-track" })
+                        @Html.ActionLink("Details", "Details", new { id = item.TaskTrackId }, new { @class = "btn btn-info details-progress" })
                     </div>
                 </td>
             </tr>
         }
     </tbody>
-
 </table>
 
-@ModalFadeHelper.CreateModal(values)
+<div class="d-flex justify-content-end">
+    @Html.ActionLink("Back to User Profiles", "Index", "UserProfile", null, new { @class = "btn btn-light" })
+</div>
 
+@ModalFadeHelper.CreateModal(values)
 
 @section scripts
     {
@@ -70,9 +66,7 @@
 
     <script type="text/javascript">
 
-        openModal(`.edit-task-track`, `#edit-task-track`);
-        openModal(`.delete-task-track`, `#delete-task-track`);
-        openModal(`.details-task-track`, `#details-task-track`);
+        openModal(".details-progress", "#details-progress");
 
     </script>
 }

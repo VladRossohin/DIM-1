@@ -2,14 +2,10 @@
 
 @{
     ViewBag.Title = "User Profile Page";
-    string[] values = new string[] { "create-user", "edit-user", "delete-user", "details-user" };
+    string[] values = new string[] { "details-user" };
 }
 
-<h2>User Profile CRUD Grid</h2>
-
-<p>
-    @Html.ActionLink("Register", "Create", null, new { @class = "btn btn-success create-user" })
-</p>
+<h2>User Profile Grid</h2>
 
 <table class="table table-bordered">
     <thead class="thead-dark">
@@ -58,33 +54,22 @@
                     @Html.DisplayFor(modelItem => item.Age)
                 </td>
                 <td class="d-flex justify-content-around">
-                    <div class="btn-group-vertical">
-                        @Html.ActionLink("Progress", "Index", "UserProgress", new { id = item.UserId }, new { @class = "btn btn-light progress-user" })
-                        @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-success edit-user" })
-                    </div>
-                    <div class="btn-group-vertical">
-                        @Html.ActionLink("Tasks", "Index", "UserTask", new { id = item.UserId }, new { @class = "btn btn-light tasks-user" })
-                        @Html.ActionLink("Delete", "DeleteById", new { id = item.UserId }, new { @class = "btn btn-danger delete-user" })
-                    </div>
-                    <div class="btn-group-vertical">
-                        @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "btn btn-info details-user" })
-                    </div>
+                    @Html.ActionLink("Progress", "Index", "UserProgress", new { id = item.UserId }, new { @class = "btn btn-light progress-user" })
+                    @Html.ActionLink("Tasks", "Index", "UserTask", new { id = item.UserId }, new { @class = "btn btn-light tasks-user" })
+                    @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "btn btn-info details-user" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@ModalFadeHelper.CreateModal(values);
+@ModalFadeHelper.CreateModal(values)
 
 @section scripts
 {
     <script src="~/Scripts/helpersRazor.js"></script>
     <script type="text/javascript">
 
-        openModal(".delete-user", "#delete-user");
-        openModal(".create-user", "#create-user");
-        openModal(".edit-user", "#edit-user");
         openModal(".details-user", "#details-user");
 
     </script>

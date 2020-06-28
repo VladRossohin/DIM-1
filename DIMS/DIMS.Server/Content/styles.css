@@ -41,3 +41,7 @@ textarea {
         max-width: 100%;
     }
 }
+
+.btn-group > .btn, .btn-group-vertical > .btn {
+    flex: 0;
+}

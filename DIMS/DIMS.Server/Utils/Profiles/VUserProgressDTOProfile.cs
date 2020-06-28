@@ -7,7 +7,7 @@ namespace DIMS.BL.DTO
     {
         public VUserProgressDTOProfile()
         {
-            CreateMap<VUserProgressDTO, vUserProgress>();
+            CreateMap<VUserProgressDTO, vUserProgress>().ReverseMap();
         }
     }
 }

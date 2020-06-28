@@ -15,8 +15,8 @@ namespace DIMS.EF.DAL.Data
 
     public partial class vUserTask
     {
-        [Key]
         public int UserId { get; set; }
+        [Key]
         public int TaskId { get; set; }
         public string TaskName { get; set; }
         public string Description { get; set; }

@@ -30,8 +30,9 @@ namespace DIMS.BL.Services
 
         public IEnumerable<VUserTaskDTO> GetByUserId(int id)
         {
-            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<VUserTaskDTO>>(
-                Repository.GetByUserId(id));
+            var vUserTaskDtos = Repository.GetByUserId(id);
+
+            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<VUserTaskDTO>>(vUserTaskDtos);
         }
 
         public VUserTaskDTO GetById(int id)

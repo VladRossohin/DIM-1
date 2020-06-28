@@ -1,4 +1,4 @@
-﻿@model DIMS.Server.Models.Tasks.VUserTrackViewModel
+﻿@model DIMS.Server.Models.Tasks.TaskTrackViewModel
 
 @{
     Layout = null;
@@ -7,7 +7,7 @@
 <div class="modal-content">
 
     <div class="modal-header">
-        <h2>Edit</h2>
+        <h2>Create track</h2>
     </div>
 
     @using (Html.BeginForm())
@@ -36,6 +36,6 @@
             </div>
         </div>
 
-        @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Edit", ButtonClass = "success", Id = Model.UserId })
+        @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Create", ButtonClass = "success", Id = ViewBag.UserId })
     }
 </div>

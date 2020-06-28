@@ -1,4 +1,4 @@
-﻿@model DIMS.Server.Models.Tasks.TaskTrackViewModel
+﻿@model DIMS.Server.Models.Tasks.VUserTrackViewModel
 
 @{
     Layout = null;
@@ -30,16 +30,9 @@
 
         </dl>
     </div>
-    <div class="modal-footer">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="d-flex justify-content-between">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                @Html.ActionLink("Back to List", "Index", new { userId = Model.UserId }, new { @class = "btn btn-light" })
-            </div>
-        }
-    </div>
-
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger", Id = Model.UserId })
+    }
 </div>

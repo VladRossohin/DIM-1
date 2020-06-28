@@ -47,23 +47,14 @@
                 <dd>
                     @Html.DisplayFor(model => model.taskViewModel.DeadlineDate)
                 </dd>
-
             </dl>
-
         </div>
 
-        <div class="modal-footer">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                <div class="d-flex justify-content-between">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
-                </div>
-            }
-        </div>
-
+            @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
+        }
     </div>
-
 </div>

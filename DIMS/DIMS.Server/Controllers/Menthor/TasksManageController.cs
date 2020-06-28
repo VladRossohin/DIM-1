@@ -12,6 +12,8 @@ using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
+    [RoutePrefix("tasks")]
+    [Authorize(Roles = "admin, mentor")]
     public class TasksManageController : BaseMVCController
     {
         public TasksManageController(ITaskService taskService,
@@ -25,8 +27,7 @@ namespace DIMS.Server.Controllers.Menthor
         {
         }
 
-        [Authorize(Roles = "admin, mentor")]
-        [Route("tasks")]
+        [Route("all")]
         public ActionResult Index()
         {
             IEnumerable<VTaskDTO> taskDTOs = _vTaskService.GetAll();
@@ -36,6 +37,7 @@ namespace DIMS.Server.Controllers.Menthor
             return View(taskListViewModel);
         }
 
+        [Route("create")]
         public ActionResult Create()
         {
             var userProfileDtos = _vUserProfileService.GetAll();
@@ -50,6 +52,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Route("create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TaskViewModel taskViewModel, UserTaskViewModel userTaskViewModel)
         {
@@ -90,6 +93,7 @@ namespace DIMS.Server.Controllers.Menthor
             return View(taskManagePageViewModel);
         }
 
+        [Route("edit/{id}")]
         public ActionResult Edit(int id)
         {
             ViewBag.TaskUsers = GetUsersForTask(id);
@@ -112,6 +116,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Route("edit/{id}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TaskManagePageViewModel taskManagePageViewModel, int id)
         {
@@ -171,6 +176,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpGet]
+        [Route("delete/{id}")]
         public ActionResult Delete(int id)
         {
             var taskDto = _taskService.GetById(id);
@@ -195,6 +201,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Route("delete/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
@@ -211,16 +218,12 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpGet]
-        public ActionResult Details(int? id)
+        [Route("details/{id}")]
+        public ActionResult Details(int id)
         {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var taskDto = _taskService.GetById(id.Value);
+            var taskDto = _taskService.GetById(id);
             var userProfileDtos = _vUserProfileService.GetAll();
-            var userTaskDtos = _userTaskService.GetAllUserTasksByTaskId(id.Value);
+            var userTaskDtos = _userTaskService.GetAllUserTasksByTaskId(id);
 
             if (taskDto == null)
             {

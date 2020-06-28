@@ -184,6 +184,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\background.jpg" />
     <Content Include="Content\main-page.css" />
     <Content Include="Content\styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -327,14 +328,21 @@
     <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\Tasks\TasksController.cs" />
+    <Compile Include="Controllers\Users\UserTaskController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
     <Compile Include="Controllers\Users\UserProgressController.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActionLinkViewModel.cs" />
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
     <Compile Include="Models\Tasks\vUserTaskViewModel.cs" />
+    <Compile Include="Models\MainPageViewModel.cs" />
+    <Compile Include="Models\Partials\ModalButtonViewModel.cs" />
+    <Compile Include="Models\Tasks\VUserTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
+    <Compile Include="Models\Users\VUserProgressDetailsViewModel.cs" />
     <Compile Include="Utils\Profiles\DirectionViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -342,7 +350,7 @@
     <Compile Include="Models\Samples\SampleViewModel.cs" />
     <Compile Include="Utils\Profiles\SampleViewModelProfile.cs" />
     <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
-    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
+    <Compile Include="Models\Tasks\VUserTrackViewModel.cs" />
     <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
@@ -388,7 +396,6 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\SuccessRegister.cshtml" />
@@ -403,7 +410,6 @@
     <Content Include="Views\UserProfile\DeleteByEmail.cshtml" />
     <Content Include="Views\UserProfile\Edit.cshtml" />
     <Content Include="Views\UserProfile\Details.cshtml" />
-    <Content Include="Views\UserProfile\Progress.cshtml" />
     <Content Include="Views\TasksManage\Create.cshtml" />
     <Content Include="Views\TasksManage\Details.cshtml" />
     <Content Include="Views\TasksManage\Edit.cshtml" />
@@ -427,6 +433,14 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_LayoutMainPage.cshtml" />
+    <Content Include="Views\UserProgress\Index.cshtml" />
+    <Content Include="Views\UserProgress\Details.cshtml" />
+    <Content Include="Views\Shared\ModalButtons.cshtml" />
+    <Content Include="Views\UserTask\Index.cshtml" />
+    <Content Include="Views\UserTask\Create.cshtml" />
+    <Content Include="Views\UserTask\Details.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\UserProfile\MentorIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -38,17 +38,25 @@ namespace DIMS.Server.Controllers
 
         [HttpGet]
         [Route("profiles")]
+        [Authorize(Roles = "admin, mentor")]
         public ActionResult Index()
         {
             var userProfileDtos = _vUserProfileService.GetAll();
 
             var userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos);
-
-            return View(userProfileListViewModel);
+            if (User.IsInRole("admin"))
+            {
+                return View(userProfileListViewModel);
+            }
+            else
+            {
+                return View("MentorIndex", userProfileListViewModel);
+            }
         }
 
         [HttpGet]
         [Route("create")]
+        [Authorize(Roles ="admin")]
         public ActionResult Create()
         {
             var directions = GetDirections();
@@ -60,6 +68,7 @@ namespace DIMS.Server.Controllers
 
         [HttpPost]
         [Route("create")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserProfileViewModel userProfileViewModel)
         {
@@ -90,6 +99,7 @@ namespace DIMS.Server.Controllers
 
         [HttpGet]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (!id.HasValue)
@@ -113,6 +123,7 @@ namespace DIMS.Server.Controllers
 
         [HttpPost, ActionName("Edit")]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile(UserProfileViewModel userProfileViewModel, int? id)
         {
@@ -145,6 +156,7 @@ namespace DIMS.Server.Controllers
 
         [HttpGet]
         [Route("profile/{id?}")]
+        [Authorize(Roles = "admin, mentor")]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -165,26 +177,8 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpGet]
-        [Route("profile/progress/{id?}")]
-        public ActionResult Progress(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var userProgressDto = _vUserProgressService.GetByUserId(id.Value);
-
-            var user = _vUserProfileService.GetById(id.Value);
-
-            var vUserProgressesListViewModel = new VUserProgressesListViewModel(
-                _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(user),
-                _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(userProgressDto)
-                );
-
-            return PartialView(vUserProgressesListViewModel);
-        }
-
+        [Route("delete/{id?}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)
@@ -205,6 +199,8 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpPost]
+        [Route("delete/{id?}")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteById(int id)
         {
@@ -221,7 +217,7 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpGet]
-        [Route("delete/{email?}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
@@ -242,7 +238,7 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{email?}")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteByEmail(string email, int id)
         {

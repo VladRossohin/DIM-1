@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DIMS.Server.Models.Tasks.VUserTaskViewModel>
+
+@{
+    ViewBag.Title = "User Task Page";
+    string[] values = new string[] { "user-task-track", "details-task" };
+}
+
+<h2>This is @ViewBag.UserName tasks</h2>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Name
+            </th>
+            <th scope="col">
+                Start
+            </th>
+            <th scope="col">
+                Deadline
+            </th>
+            <th scope="col">
+                Status
+            </th>
+            <th scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeadlineDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td class="d-flex justify-content-around">
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Details", "Details", new { taskId = item.TaskId, userId = item.UserId }, new { @class = "btn btn-info details-task" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Track", "Create", new { taskId = item.TaskId, userId = item.UserId }, new { @class = "btn btn-success user-task-track" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div class="d-flex justify-content-end">
+    @Html.ActionLink("Back to User Profiles", "Index", "UserProfile", null, new { @class = "btn btn-light" })
+</div>
+
+@ModalFadeHelper.CreateModal(values)
+
+
+@section scripts
+    {
+    <script src="~/Scripts/helpersRazor.js"></script>
+
+    <script type="text/javascript">
+
+        openModal(`.user-task-track`, `#user-task-track`);
+        openModal(`.details-task`, `#details-task`);
+
+    </script>
+}

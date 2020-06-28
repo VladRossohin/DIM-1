@@ -1,0 +1,75 @@
+﻿@model DIMS.Server.Models.Users.VUserProgressDetailsViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h2>@Html.DisplayFor(model => model.VUserProgress.TaskName)</h2>
+    </div>
+
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.VUserProgress.TaskId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.VUserProgress.TaskId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VUserProgress.TrackNote)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.VUserProgress.TrackNote)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VUserProgress.TrackDate)
+            </dt>
+
+            <dd>
+                @{
+                    var trackDate = Model.VUserProgress.TrackDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => trackDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VTask.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.VTask.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VTask.StartDate)
+            </dt>
+
+            <dd>
+                @{
+                    var startDate = Model.VTask.StartDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => startDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VTask.DeadlineDate)
+            </dt>
+
+            <dd>
+                @{
+                    var deadlineDate = Model.VTask.DeadlineDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => deadlineDate)
+            </dd>
+        </dl>
+    </div>
+
+    @Html.Partial("ModalButtons", new ModalButtonViewModel { IsItDetails = true, Id = Model.VUserProgress.UserId })
+</div>
